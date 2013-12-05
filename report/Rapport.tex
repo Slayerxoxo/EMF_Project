@@ -1,0 +1,183 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% HEADER %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+
+
+%%%%% Packages %%%%%
+
+	%%%%% Language %%%%% 
+\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+	%%%%% Graphic %%%%%
+\usepackage{graphicx}
+	%%%%% Mise en page %%%%%
+\usepackage{fancyhdr}
+
+%%%%% Macros %%%%
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\pagestyle{fancy}
+\lhead{EMF Project \\ Projet de Vérification et tests}
+\rhead{Coraline \textsc{Marie} \\ Vincent \textsc{Raveneau}}
+
+%%%%% Doc's informations %%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% DOCUMENT %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%%%%% Page de garde %%%%
+	\begin{titlepage}
+		\begin{center}
+
+			\includegraphics[width=0.45\textwidth]{UN-sciences.png}~\\[2cm]
+
+			\LARGE{Master 1 \sc{Alma}}\\[1.5cm]
+
+			\Large{Projet de Vérification et tests}\\[0.5cm]
+
+			% Titre
+			\HRule \\[0.4cm]
+			{ \huge \bfseries EMF Project \\[0.4cm] }
+			\HRule \\[1.5cm]
+
+			% Auteur et Encadrant
+			\normalsize		
+			\emph{\'Etudiants :}\\
+			Coraline \textsc{Marie} et Vincent \textsc{Raveneau}\\
+			\vspace{0.5cm}
+			\emph{Intervenant :} \\
+			Gerson \textsc{Sunyé}
+		
+			\vfill
+
+			% Bottom of the page
+			{\large 13 décembre 2013}
+
+		\end{center}
+	\end{titlepage}
+
+
+	%%%%% Sommaire %%%%%
+	\renewcommand{\contentsname}{Sommaire}
+	\tableofcontents
+	\newpage
+
+
+	%%%%% Introduction %%%%%
+	\begin{center}
+		\section{Introduction}
+	\end{center}
+
+	\vspace{0.5cm}
+
+	La création d'un logiciel, quel qu'il soit, n'est jamais sûr. Le code source peut contenir des fautes, des bugs ou des défauts, sans même que le programmeur ne les remarque. Fort heureusement, il existe aujourd'hui des méthodes efficaces pour contrer ces failles, et renforcer la fiabilité du code source, comme par exemple les tests unitaires.
+
+	\vspace{0.5cm}
+
+	Le module Vérification et tests que nous avons étudié en Master \textsc{Alma} à l’Université de Nantes, nous a apporté un ensemble de techniques utilisables sur la majorité des langages informatique. Pour parfaire cet apprentissage, nous avons travaillé sur la restructuration et l'amélioration de l'EMF (Eclipse Modeling Framework), un logiciel libre développé par Eclipse.
+
+	\vspace{0.5cm}
+
+	Ce rapport présente donc une application directe de ce que nous a appris le module Vérification et tests, au travers de deux grandes étapes de travail. Pour la première, nous avons tout d'abord restructuré une partie du code source de l'EMF en un projet Maven. Puis nous avons évalué les tests déjà présent dans ce code. Pour la seconde étape nous avons amélioré autant que possible la qualité de la classe URI, afin d'augmenter sa fiabilité.
+
+	\newpage
+
+
+	%%%%% Partie 1 %%%%%
+	\begin{center}
+		\section{Restructuration et évaluation}
+	\end{center}
+
+	\vspace{0.5cm}
+
+		%%%%% Partie 1.1 %%%%%
+		\subsection{Réorganisation avec Maven}
+
+		\vspace{0.5cm}
+
+		L'un des objectifs pédagogiques du projet de vérification et tests, était de nous apprendre à utiliser un nouvel outil : Maven. 
+
+		\subsubsection{Qu'est ce que Maven ?}
+
+		\vspace{0.5cm}
+
+		Maven (ou Apache Maven) est un logiciel libre, qui permet la gestion et la production automatique de projets liés au langage de programmation Java. Il s'agit d'un outil, qui aide à la conception de logiciels à partir du code source, en optimisant les tâches et en garantissant le bon ordre de fabrication.
+
+		\vspace{0.5cm}
+
+		\subsubsection{Convertion du code original}
+
+		\vspace{0.5cm}
+
+		Le code source original du projet EMF est disponible sur gitHub. Il est donc récupérable en archive, et modifiable par n'importe qui. Cependant, l'archive téléchargeable présente le code dans une arborescence de type Eclipse, et le cahier des charges nous demandait de ne pas utiliser l'IDE Eclipse pour ce projet.
+
+		\vspace{0.5cm}
+
+		Pour résoudre ce problème, la solution était de choisir un nouvel IDE, compatible avec Maven, et adapter l'arborescence du code source initial. Nous avons donc choisi d'utiliser l'IDE Netbean, car il est intuitif et compatible avec Maven.
+
+		\vspace{0.5cm}
+
+		Malgré la facilité de conversion de l'architecture, cette tâche fût longue et relativement fastidieuse. Nous n'avons pas converti la totalité de l'archive téléchargée, mais juste la partie du code intéressante pour notre projet.
+
+		\vspace{0.5cm}
+
+		\subsubsection{Bugs et résolution}
+
+		\vspace{0.5cm}
+
+		M
+
+		\vspace{0.5cm}
+
+
+
+		%%%%% Partie 1.2 %%%%%
+		\subsection{Evaluation des tests}
+
+		\vspace{0.5cm}
+
+		Bla bla bla bla bla
+
+	\newpage
+
+	%%%%% Partie 2 %%%%%
+	\begin{center}
+		\section{Amélioration de URI}
+	\end{center}
+
+	\vspace{0.5cm}
+
+		%%%%% Partie 2.1 %%%%%
+		\subsection{La classe URI}
+
+		\vspace{0.5cm}
+
+			\subsubsection{Défauts de conception}
+
+			Bla bla bla bla bla
+
+			\vspace{0.5cm}
+
+			\subsubsection{Améliorations possibles}
+
+			Bla bla bla bla bla
+
+			\vspace{0.5cm}
+
+
+		%%%%% Partie 2.2 %%%%%
+		\subsection{Modifications}
+
+		\vspace{0.5cm}
+
+		Bla bla bla bla bla
+
+
+\end{document}
