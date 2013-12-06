@@ -15,6 +15,8 @@
 \usepackage{graphicx}
 	%%%%% Mise en page %%%%%
 \usepackage{fancyhdr}
+	%%%%% Tableaux %%%%%
+\usepackage{colortbl} 
 
 %%%%% Macros %%%%
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
@@ -140,32 +142,12 @@
 
 		\vspace{0.5cm}
 
-		Lors de la conversion du code source initial vers notre projet Maven, plusieurs erreurs sont apparues. 
-
-		\vspace{0.5cm}
-		\underline{Bibliothèques et dépendances}
-
-		\vspace{0.5cm}
-		Pour gérer les bibliothèques et les dépendances d'un projet, Maven utilise un fichier \texttt{pom.xml}, qui décrit l'ensemble des besoins de l'application. Les premières erreurs apparues dans le projet étaient donc liées à ce fichier, car il manquait certaines dépendances :
+		Pour gérer les bibliothèques et les dépendances d'un projet, Maven utilise un fichier \texttt{pom.xml}, qui décrit l'ensemble des besoins de l'application. Lors de la conversion du code source initial vers notre projet Maven, plusieurs erreurs liées à ce fichier sont apparues, car il manquait des dépendances :
 		\begin{itemize}
 			\item JUnit : framework de test unitaire.
 			\item Core Runtime : framework (de Eclipse RCP).
 			\item EMF ecore et EMF ecore xmi.
 		\end{itemize}
-
-		\vspace{0.5cm}
-		\underline{Erreurs de constructions}
-
-		\vspace{0.5cm}
-		La seconde erreur que nous avons rencontrer concernait quatre ligne de code, incluses dans la classe de test \texttt{ReificationFactoryImpl.java}.
-
-		Les deux premières lignes défaillantes sont dues à une erreur de typage :
-		%\texttt{case ReificationPackage.KEY_VALUE_PAIR: return createKeyValuePair();}
-		%\texttt{case ReificationPackage.KEY_VALUE_PAIR_CONTAINER: return createKeyValuePairContainer();}
-
-		Les deux secondes necessitent une dépendance, la package \texttt{org.eclipse.emf.ecore.EObject} qui n'est pas téléchargé automatiquement par notre version de Maven :
-		%case ReificationPackage.BIDIRECTIONAL: return createBidirectional();
-		%case ReificationPackage.MEDIUM_BIDIRECTIONAL: return createMediumBidirectional();
 
 		\vspace{0.5cm}
 
