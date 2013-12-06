@@ -81,7 +81,7 @@
 
 	\vspace{0.5cm}
 
-	Le module Vérification et tests que nous avons étudié en Master \textsc{Alma} à l’Université de Nantes, nous a apporté un ensemble de techniques utilisables sur la majorité des langages informatique. Pour parfaire cet apprentissage, nous avons travaillé sur la restructuration et l'amélioration de l'EMF (Eclipse Modeling Framework), un logiciel libre développé par Eclipse.
+	Le module Vérification et tests que nous avons étudié en Master \textsc{Alma} à l’Université de Nantes, nous a apporté un ensemble de techniques utilisables sur la majorité des langages informatique. Pour parfaire cet apprentissage, nous avons travaillé sur la restructuration et l'amélioration de l'EMF (Eclipse Modeling Framework), un logiciel libre développé pour et par Eclipse.
 
 	\vspace{0.5cm}
 
@@ -116,15 +116,23 @@
 
 		\vspace{0.5cm}
 
-		Le code source original du projet EMF est disponible sur gitHub. Il est donc récupérable en archive, et modifiable par n'importe qui. Cependant, l'archive téléchargeable présente le code dans une arborescence de type Eclipse, et le cahier des charges nous demandait de ne pas utiliser l'IDE Eclipse pour ce projet.
+		Le code source original du projet EMF est disponible sur gitHub. Il est donc téléchargeable en archive, et modifiable par n'importe qui. Cependant, l'archive que nous avons récupérée fournit un code source conditionné pour l'environnement de développement Eclipse, et cet IDE nous à été fortement déconseillé.
 
 		\vspace{0.5cm}
 
-		Pour résoudre ce problème, la solution était de choisir un nouvel IDE, compatible avec Maven, et adapter l'arborescence du code source initial. Nous avons donc choisi d'utiliser l'IDE Netbean, car il est intuitif et compatible avec Maven.
+		Ainsi, pour répondre à la demande du cahier des charges de ne pas utiliser Eclipse, nous avons choisi un nouvel IDE compatible avec Maven pour travailler. Ce choix c'est porté sur l'IDE NetBeans, qui permet de supporter plusieurs langages, et dont la dernière version inclut Maven. Cependant, le code source original devait être au préalable adapté, avant de pouvoir
 
 		\vspace{0.5cm}
 
-		Malgré la facilité de conversion de l'architecture, cette tâche fût longue et relativement fastidieuse. Nous n'avons pas converti la totalité de l'archive téléchargée, mais juste la partie du code intéressante pour notre projet.
+		Afin d'optimiser notre travail, nous n'avons pas converti la totalité de l'archive téléchargée, mais juste la partie du code intéressante pour le projet. Malgré la facilité de conversion de l'architecture, cette tâche fût longue et relativement fastidieuse. Certaines erreurs de package et de plugin sont apparues, ce qui nous a pris du temps à résoudre. 
+
+		\vspace{0.5cm}
+
+		Voici l'arborescance obtenue après la conversion du code source original en projet Netbean/Maven : 
+
+		\begin{center}
+			\includegraphics[width=0.30\textwidth]{Arborescence.jpg}~\\
+		\end{center}
 
 		\vspace{0.5cm}
 
@@ -132,7 +140,32 @@
 
 		\vspace{0.5cm}
 
-		M
+		Lors de la conversion du code source initial vers notre projet Maven, plusieurs erreurs sont apparues. 
+
+		\vspace{0.5cm}
+		\underline{Bibliothèques et dépendances}
+
+		\vspace{0.5cm}
+		Pour gérer les bibliothèques et les dépendances d'un projet, Maven utilise un fichier \texttt{pom.xml}, qui décrit l'ensemble des besoins de l'application. Les premières erreurs apparues dans le projet étaient donc liées à ce fichier, car il manquait certaines dépendances :
+		\begin{itemize}
+			\item JUnit : framework de test unitaire.
+			\item Core Runtime : framework (de Eclipse RCP).
+			\item EMF ecore et EMF ecore xmi.
+		\end{itemize}
+
+		\vspace{0.5cm}
+		\underline{Erreurs de constructions}
+
+		\vspace{0.5cm}
+		La seconde erreur que nous avons rencontrer concernait quatre ligne de code, incluses dans la classe de test \texttt{ReificationFactoryImpl.java}.
+
+		Les deux premières lignes défaillantes sont dues à une erreur de typage :
+		%\texttt{case ReificationPackage.KEY_VALUE_PAIR: return createKeyValuePair();}
+		%\texttt{case ReificationPackage.KEY_VALUE_PAIR_CONTAINER: return createKeyValuePairContainer();}
+
+		Les deux secondes necessitent une dépendance, la package \texttt{org.eclipse.emf.ecore.EObject} qui n'est pas téléchargé automatiquement par notre version de Maven :
+		%case ReificationPackage.BIDIRECTIONAL: return createBidirectional();
+		%case ReificationPackage.MEDIUM_BIDIRECTIONAL: return createMediumBidirectional();
 
 		\vspace{0.5cm}
 

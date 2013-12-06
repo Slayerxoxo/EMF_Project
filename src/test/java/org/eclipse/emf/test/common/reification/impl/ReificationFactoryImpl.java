@@ -92,11 +92,11 @@ public class ReificationFactoryImpl extends EFactoryImpl implements ReificationF
       case ReificationPackage.INTEGER_LIST_KEY_VALUE_PAIR: return createIntegerListKeyValuePair();
       //case ReificationPackage.KEY_VALUE_PAIR_CONTAINER: return createKeyValuePairContainer();
       case ReificationPackage.STRING_LIST_KEY_VALUE_PAIR_CONTAINER: return createStringListKeyValuePairContainer();
-      //case ReificationPackage.BIDIRECTIONAL: return createBidirectional();
+      case ReificationPackage.BIDIRECTIONAL: return createBidirectional();
       case ReificationPackage.LINK: return createLink();
       case ReificationPackage.RAW_LINK: return createRawLink();
       case ReificationPackage.LINK_ITEM: return createLinkItem();
-      //case ReificationPackage.MEDIUM_BIDIRECTIONAL: return createMediumBidirectional();
+      case ReificationPackage.MEDIUM_BIDIRECTIONAL: return createMediumBidirectional();
       case ReificationPackage.MEDIUM_LINK: return createMediumLink();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
