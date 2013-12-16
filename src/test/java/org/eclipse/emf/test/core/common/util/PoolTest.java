@@ -10,25 +10,26 @@ package org.eclipse.emf.test.core.common.util;
 
 import org.eclipse.emf.common.util.Pool;
 
-
+//import junit.framework.Test;
+//import junit.framework.TestCase;
+//import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.junit.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
-public class PoolTest extends TestCase
+public class PoolTest //extends TestCase
 {
-  public PoolTest(String name)
+  /*public PoolTest(String name)
   {
     super(name);
   }
 
-  public static TestSuite suite()
+  public static Test suite()
   {
     TestSuite suite = new TestSuite("PoolTest");
     suite.addTest(new PoolTest("testWeakness"));
     return suite;
-  }
+  }*/
 
   @Test
   public void testWeakness()
@@ -37,12 +38,12 @@ public class PoolTest extends TestCase
     {
       String foo = new String("foo");
       set.add(foo);
-      assertTrue(set.contains("foo"));
-      assertEquals(1, set.size());
+      Assert.assertTrue(set.contains("foo"));
+      Assert.assertEquals(1, set.size());
       foo = null;
     }
     System.gc();
-    assertFalse(set.contains("foo"));
+    Assert.assertFalse(set.contains("foo"));
     try
     {
       // If the garbage collector a chance to enqueue the stale entries.
@@ -52,7 +53,7 @@ public class PoolTest extends TestCase
     {
       // Expected.
     }
-    assertEquals(0, set.size());
+    Assert.assertEquals(0, set.size());
   }
 }
   

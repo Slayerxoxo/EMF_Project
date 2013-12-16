@@ -27,16 +27,19 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
+//import junit.framework.Test;
+//import junit.framework.TestCase;
+//import junit.framework.TestSuite;
+
 import org.junit.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
 
 import org.eclipse.emf.common.util.InterningSet;
 import org.eclipse.emf.common.util.URI;
 
-public class URITest extends TestCase
+public class URITest /*extends TestCase*/
 {
-  public URITest(String name)
+  /*public URITest(String name)
   {
     super(name);
   }
@@ -58,7 +61,7 @@ public class URITest extends TestCase
     suite.addTest(new URITest("testGenericURI"));
     suite.addTest(new URITest("testThreadSafety"));
     return suite;
-  }
+  }*/
 
   protected static final String URN = "mailto:me@yahoo.com";
 
@@ -465,6 +468,7 @@ public class URITest extends TestCase
    * Parses URIs and converts them back to strings, comparing with the originals.
    *
    */
+  @org.junit.Test
   public void testParse()
   {
     String[] uriStrings = getAllURLs();
@@ -472,7 +476,7 @@ public class URITest extends TestCase
     {
       String s = uriStrings[i];
       URI u = URI.createURI(s);
-      assertEquals("Bad URL parse", s, u.toString());
+      Assert.assertEquals("Bad URL parse", s, u.toString());
     }
 
     uriStrings = getURNs();
@@ -480,7 +484,7 @@ public class URITest extends TestCase
     {
       String s = uriStrings[i];
       URI u = URI.createURI(s);
-      assertEquals("Bad URN parse", s, u.toString());
+      Assert.assertEquals("Bad URN parse", s, u.toString());
     }
   }    
 
@@ -488,6 +492,7 @@ public class URITest extends TestCase
    * Resolves URIs against a base, comparing with the known correct results.
    * This tests both preserving and not preserving path segments above root.
    */
+  @org.junit.Test
   public void testResolve()
   {
     URI base = URI.createURI(BASE_URI);
@@ -504,7 +509,7 @@ public class URITest extends TestCase
         URI uri = URI.createURI(uriStrings[j]);
         URI resolved = URI.createURI(resolvedStrings[j]);
         URI myResolved = uri.resolve(base, preserve);
-        assertEquals("Bad resolve: " + uri, resolved, myResolved);
+        Assert.assertEquals("Bad resolve: " + uri, resolved, myResolved);
       }
     }
   }
@@ -514,6 +519,7 @@ public class URITest extends TestCase
    * This tests both preserving and no preserving path segments above roots, and skips cases where the unresolved URI
    * is non-canonical.
    */
+  @org.junit.Test
   public void testDeresolve()
   {
     URI base = URI.createURI(BASE_URI);
@@ -536,7 +542,7 @@ public class URITest extends TestCase
   
         URI deresolved = URI.createURI(deresolvedStrings[j]);
         URI myDeresolved = uri.deresolve(base, preserve, deresolved.hasRelativePath(), false);
-        assertEquals("Bad deresolve: " + uri, deresolved, myDeresolved);
+        Assert.assertEquals("Bad deresolve: " + uri, deresolved, myDeresolved);
       }
     }
   }
@@ -544,6 +550,7 @@ public class URITest extends TestCase
   /**
    * Parses URIs and calls the authority sub-part accessors, comparing with known results. 
    */
+  @org.junit.Test
   public void testAuthorityParse()
   {
     String[] uriStrings = AUTHORITY_PARSE_URIS;
@@ -554,9 +561,9 @@ public class URITest extends TestCase
     for (int i = 0, len = uriStrings.length; i < len; i++)
     {
       URI uri = URI.createURI(uriStrings[i]);
-      assertEquals("Bad user info parse: " + uriStrings[i], userInfos[i], uri.userInfo()); 
-      assertEquals("Bad host parse: " + uriStrings[i], hosts[i], uri.host()); 
-      assertEquals("Bad port parse: " + uriStrings[i], ports[i], uri.port()); 
+      Assert.assertEquals("Bad user info parse: " + uriStrings[i], userInfos[i], uri.userInfo()); 
+      Assert.assertEquals("Bad host parse: " + uriStrings[i], hosts[i], uri.host()); 
+      Assert.assertEquals("Bad port parse: " + uriStrings[i], ports[i], uri.port()); 
     }
   }
 
@@ -564,6 +571,7 @@ public class URITest extends TestCase
    * Parses URIs with JAR scheme and converts them back to strings, comparing with the originals.  Parses invalid
    * JAR-scheme URIs, checking to ensure that the correct exceptions are thrown.
    */
+  @org.junit.Test
   public void testJARParse()
   {
     String[] uriStrings = JAR_URIS;
@@ -572,7 +580,7 @@ public class URITest extends TestCase
     {
       String s = uriStrings[i];
       URI u = URI.createURI(s);
-      assertEquals("Bad JAR-scheme URI parse", s, u.toString());
+      Assert.assertEquals("Bad JAR-scheme URI parse", s, u.toString());
     }
 
     uriStrings = BAD_JAR_URIS;
@@ -583,7 +591,7 @@ public class URITest extends TestCase
       try
       {
         URI.createURI(s);
-        fail("Parse of bad JAR-scheme URI failed to throw IllegalArgumentException: " + s);
+        Assert.fail("Parse of bad JAR-scheme URI failed to throw IllegalArgumentException: " + s);
       }
       catch (IllegalArgumentException e)
       {
@@ -596,6 +604,7 @@ public class URITest extends TestCase
    * Parses a URI with a fragment, appends a fragment to a URI, replaces that fragment with another, then trims the
    * three fragments, comparing the results to the base.
    */
+  @org.junit.Test
   public void testFragmentAppendAndTrim()
   {
     String base = "http://download.eclipse.org/tools/emf/scripts/home.php";
@@ -604,29 +613,30 @@ public class URITest extends TestCase
     String fragment3 = "over2";
 
     URI fragment1URI = URI.createURI(base + "#" + fragment1);
-    assertEquals("Bad URI parse", base + "#" + fragment1, fragment1URI.toString());
+    Assert.assertEquals("Bad URI parse", base + "#" + fragment1, fragment1URI.toString());
 
     URI baseURI = URI.createURI(base);
     URI fragment2URI = baseURI.appendFragment(fragment2);
-    assertEquals("Bad fragment append: " + fragment2, base + "#" + fragment2, fragment2URI.toString());
+    Assert.assertEquals("Bad fragment append: " + fragment2, base + "#" + fragment2, fragment2URI.toString());
 
     URI fragment3URI = fragment2URI.appendFragment(fragment3);
-    assertEquals("Bad fragment replace: " + fragment3, base + "#" + fragment3, fragment3URI.toString());
+    Assert.assertEquals("Bad fragment replace: " + fragment3, base + "#" + fragment3, fragment3URI.toString());
 
     URI trimmedFragment1URI = fragment1URI.trimFragment();
-    assertEquals("Bad parsed fragment trim: " + fragment1URI, base, trimmedFragment1URI.toString());
+    Assert.assertEquals("Bad parsed fragment trim: " + fragment1URI, base, trimmedFragment1URI.toString());
 
     URI trimmedFragment2URI = fragment2URI.trimFragment();
-    assertEquals("Bad appended fragment trim: " + fragment2URI, base, trimmedFragment2URI.toString());
+    Assert.assertEquals("Bad appended fragment trim: " + fragment2URI, base, trimmedFragment2URI.toString());
 
     URI trimmedFragment3URI = fragment3URI.trimFragment();
-    assertEquals("Bad replaced fragment trim: " + fragment3URI, base, trimmedFragment3URI.toString());
+    Assert.assertEquals("Bad replaced fragment trim: " + fragment3URI, base, trimmedFragment3URI.toString());
   }
 
   /**
    * Performs automatic encoding of general URIs and platform resource URIs, and decodes the former back, comparing the
    * result to known encoded versions.
    */
+  @org.junit.Test
   public void testEncodeAndDecode()
   {
     String[] unencodedURIStrings = UNENCODED_URIS;
@@ -636,8 +646,8 @@ public class URITest extends TestCase
     {
       String unencoded = unencodedURIStrings[i];
       URI encodedURI = URI.createURI(unencoded, false);
-      assertEquals("Bad URI encode: " + unencoded, URI.createURI(encodedURIStrings[i]), encodedURI);
-      assertEquals("Bad URI decode: " + encodedURI, unencoded, URI.decode(encodedURI.toString()));
+      Assert.assertEquals("Bad URI encode: " + unencoded, URI.createURI(encodedURIStrings[i]), encodedURI);
+      Assert.assertEquals("Bad URI decode: " + encodedURI, unencoded, URI.decode(encodedURI.toString()));
     }
 
     encodedURIStrings = ENCODED_URIS_IGNORE_ESCAPED;
@@ -646,7 +656,7 @@ public class URITest extends TestCase
     {
       String unencoded = unencodedURIStrings[i];
       URI encodedURI = URI.createURI(unencoded, true);
-      assertEquals("Bad URI encode: " + unencoded, URI.createURI(encodedURIStrings[i]), encodedURI);
+      Assert.assertEquals("Bad URI encode: " + unencoded, URI.createURI(encodedURIStrings[i]), encodedURI);
     }
 
     //As of Bugzilla 72731, this behaviour requires a system property to be set.
@@ -667,64 +677,65 @@ public class URITest extends TestCase
     String encodedWithFragmentFirst = "platform://resource/a#b/c%23d%23e";
     String encodedWithFragmentLast = "platform://resource/a%23b/c%23d#e";
 
-    assertEquals("Bad URI encode: " + unencoded, encodedWithNoFragment, URI.createURI(unencoded, false, URI.FRAGMENT_NONE).toString());
-    assertEquals("Bad URI decode: " + encodedWithNoFragment, unencoded, URI.decode(encodedWithNoFragment.toString()));
+    Assert.assertEquals("Bad URI encode: " + unencoded, encodedWithNoFragment, URI.createURI(unencoded, false, URI.FRAGMENT_NONE).toString());
+    Assert.assertEquals("Bad URI decode: " + encodedWithNoFragment, unencoded, URI.decode(encodedWithNoFragment.toString()));
 
-    assertEquals("Bad URI encode: " + unencoded, encodedWithFragmentFirst, URI.createURI(unencoded, false, URI.FRAGMENT_FIRST_SEPARATOR).toString());
-    assertEquals("Bad URI decode: " + encodedWithFragmentFirst, unencoded, URI.decode(encodedWithFragmentFirst.toString()));
+    Assert.assertEquals("Bad URI encode: " + unencoded, encodedWithFragmentFirst, URI.createURI(unencoded, false, URI.FRAGMENT_FIRST_SEPARATOR).toString());
+    Assert.assertEquals("Bad URI decode: " + encodedWithFragmentFirst, unencoded, URI.decode(encodedWithFragmentFirst.toString()));
 
-    assertEquals("Bad URI encode: " + unencoded, encodedWithFragmentLast, URI.createURI(unencoded, false, URI.FRAGMENT_LAST_SEPARATOR).toString());
-    assertEquals("Bad URI decode: " + encodedWithFragmentLast, unencoded, URI.decode(encodedWithFragmentLast.toString()));
+    Assert.assertEquals("Bad URI encode: " + unencoded, encodedWithFragmentLast, URI.createURI(unencoded, false, URI.FRAGMENT_LAST_SEPARATOR).toString());
+    Assert.assertEquals("Bad URI decode: " + encodedWithFragmentLast, unencoded, URI.decode(encodedWithFragmentLast.toString()));
   }
   
+  @org.junit.Test
   public void testPlatformURI() throws Exception
   {
     {
       URI uri = URI.createURI("platform:/d:/resource/foo?bar");
-      assertFalse(uri.isPlatformResource());
+      Assert.assertFalse(uri.isPlatformResource());
     }
     {
       String resource = "platform:/resource/myProject/foo.txt";
       URI uri = URI.createURI(resource);
-      assertTrue(uri.isPlatform());
-      assertEquals("platform:/resource/myProject/foo.txt", uri.toString());
-      assertEquals("/myProject/foo.txt", uri.toPlatformString(true));
+      Assert.assertTrue(uri.isPlatform());
+      Assert.assertEquals("platform:/resource/myProject/foo.txt", uri.toString());
+      Assert.assertEquals("/myProject/foo.txt", uri.toPlatformString(true));
     }    
     {
       String resource = "myProject/foo.txt";
       URI uri = URI.createPlatformResourceURI(resource, true);
-      assertTrue(uri.isPlatform());
-      assertFalse(uri.isFile());
-      assertEquals("platform:/resource/myProject/foo.txt", uri.toString());
-      assertEquals("/myProject/foo.txt", uri.toPlatformString(true));
+      Assert.assertTrue(uri.isPlatform());
+      Assert.assertFalse(uri.isFile());
+      Assert.assertEquals("platform:/resource/myProject/foo.txt", uri.toString());
+      Assert.assertEquals("/myProject/foo.txt", uri.toPlatformString(true));
     }
     {
       String resource = "platform:/resource/myProject/foo.txt";
       URI uri = URI.createPlatformResourceURI(resource, true);
-      assertTrue(uri.isPlatform());
-      assertFalse(uri.isFile());
-      assertEquals("platform:/resource/platform:/resource/myProject/foo.txt", uri.toString());
-      assertEquals("/platform:/resource/myProject/foo.txt", uri.toPlatformString(true));
+      Assert.assertTrue(uri.isPlatform());
+      Assert.assertFalse(uri.isFile());
+      Assert.assertEquals("platform:/resource/platform:/resource/myProject/foo.txt", uri.toString());
+      Assert.assertEquals("/platform:/resource/myProject/foo.txt", uri.toPlatformString(true));
     }
     {
       String resource = new File("myProject/foo.txt").getAbsolutePath();
       URI uri = URI.createFileURI(resource);
-      assertFalse(uri.isPlatform());
-      assertTrue(uri.isFile());
+      Assert.assertFalse(uri.isPlatform());
+      Assert.assertTrue(uri.isFile());
       
       resource = resource.replace('\\', '/');   
       if (resource.charAt(0) != '/') resource = "/" + resource;
       
-      assertEquals("file:" + resource, uri.toString());
-      assertNull(uri.toPlatformString(true));
+      Assert.assertEquals("file:" + resource, uri.toString());
+      Assert.assertNull(uri.toPlatformString(true));
     }
     {
       String resource = "myProject/foo.txt";
       URI uri = URI.createFileURI(resource);
-      assertFalse(uri.isPlatform());
-      assertTrue(uri.isFile());
-      assertEquals("myProject/foo.txt", uri.toString());
-      assertNull(uri.toPlatformString(true));
+      Assert.assertFalse(uri.isPlatform());
+      Assert.assertTrue(uri.isFile());
+      Assert.assertEquals("myProject/foo.txt", uri.toString());
+      Assert.assertNull(uri.toPlatformString(true));
     }
 
     String[] paths = UNENCODED_PLATFORM_PATHS;
@@ -733,32 +744,35 @@ public class URITest extends TestCase
     {
       String path = paths[i];
       URI uri = URI.createPlatformResourceURI(path, true);
-      assertEquals("Bad platform resource encode: " + path, encodedURIStrings[i], uri.toString());
-      assertEquals(encodedURIStrings[i].substring("platform:/resource".length()), uri.toPlatformString(false));      
+      Assert.assertEquals("Bad platform resource encode: " + path, encodedURIStrings[i], uri.toString());
+      Assert.assertEquals(encodedURIStrings[i].substring("platform:/resource".length()), uri.toPlatformString(false));      
     }
   }
 
+  @org.junit.Test
   public void testFileExtensions()
   {
     for (int i = 0; i < FILE_EXTENSION_URIS.length; ++i)
     {
       String s = FILE_EXTENSION_URIS[i];
       URI uri = URI.createURI(s);
-      assertEquals("Bad trim fragment", uri.trimFileExtension().toString(), URI.createURI(FILE_EXTENSION_TRIMMED_URIS[i]).toString());
-      assertEquals("Bad append fragment", uri.trimFileExtension().appendFileExtension("bar").toString(), URI.createURI(FILE_EXTENSION_APPENDED_URIS[i]).toString());
+      Assert.assertEquals("Bad trim fragment", uri.trimFileExtension().toString(), URI.createURI(FILE_EXTENSION_TRIMMED_URIS[i]).toString());
+      Assert.assertEquals("Bad append fragment", uri.trimFileExtension().appendFileExtension("bar").toString(), URI.createURI(FILE_EXTENSION_APPENDED_URIS[i]).toString());
     }
   }
 
+  @org.junit.Test
   public void testPrefixReplacement()
   {
     for (int i = 0; i < PREFIX_URIS.length; ++i)
     {
       String s = PREFIX_URIS[i];
       URI uri = URI.createURI(s);
-      assertEquals("Bad replace prefix", PREFIX_REPLACEMENT_RESULT_URIs[i],uri.replacePrefix(URI.createURI(REPLACED_PREFIX_URIS[i]), URI.createURI(REPLACEMNT_PREFIX_URIS[i])).toString());
+      Assert.assertEquals("Bad replace prefix", PREFIX_REPLACEMENT_RESULT_URIs[i],uri.replacePrefix(URI.createURI(REPLACED_PREFIX_URIS[i]), URI.createURI(REPLACEMNT_PREFIX_URIS[i])).toString());
     }
   }
 
+  @org.junit.Test
   public void testIdentity()
   {
     for (String s : getAllURLs())
@@ -766,35 +780,36 @@ public class URITest extends TestCase
       URI uri = URI.createURI(s);
       if (uri.hasFragment())
       {
-        assertSame("Non-unique trimmed fragments" + s, uri.trimFragment(), URI.createURI(s).trimFragment());
-        assertSame("Non-unique fragments" + s, uri.fragment(), URI.createURI(s).fragment());
+        Assert.assertSame("Non-unique trimmed fragments" + s, uri.trimFragment(), URI.createURI(s).trimFragment());
+        Assert.assertSame("Non-unique fragments" + s, uri.fragment(), URI.createURI(s).fragment());
       }
       else
       {
-        assertSame("Non-unique " + s, uri, URI.createURI(s));
+        Assert.assertSame("Non-unique " + s, uri, URI.createURI(s));
       }
       String toString = uri.toString();
-      assertSame("Non-unique strings " + s, toString, URI.createURI(s).toString());
+      Assert.assertSame("Non-unique strings " + s, toString, URI.createURI(s).toString());
     }
   }
 
+  @org.junit.Test
   public void testGenericURI()
   {
     {
       URI uri1 = URI.createURI("foo:bar");
       URI uri2 = URI.createGenericURI("foo", "bar", null);
-      assertSame("Non-unique generic URI foo:bar", uri1, uri2);
+      Assert.assertSame("Non-unique generic URI foo:bar", uri1, uri2);
     }
     {
       URI uri1 = URI.createURI("foo:bar/");
       URI uri2 = URI.createGenericURI("foo", "bar/", null);
-      assertSame("Non-unique generic URI foo:bar/", uri1, uri2);
+      Assert.assertSame("Non-unique generic URI foo:bar/", uri1, uri2);
     }
     {
       try
       {
         URI uri = URI.createGenericURI("foo", "/bar", null);
-        fail("Expecting an IllegalArgumentException for " + uri);
+        Assert.fail("Expecting an IllegalArgumentException for " + uri);
       }
       catch (IllegalArgumentException exception)
       {
@@ -804,11 +819,14 @@ public class URITest extends TestCase
     }
   }
 
+  @org.junit.Test
   public void testThreadSafety()
   {
     testThreadSafety(100000, 10);
   }
   
+  //@org.junit.Test
+  //@ TODO?
   public void testThreadSafety(final int count, int stringSize)
   {
     // Create random strings.
@@ -972,7 +990,7 @@ public class URITest extends TestCase
       catch (InterruptedException exception)
       {
         exception.printStackTrace();
-        fail("Thread interupted");
+        Assert.fail("Thread interupted");
       }
     }
 
@@ -995,14 +1013,14 @@ public class URITest extends TestCase
       String value = i.next().toString();
       if (!uriStrings.add(value))
       {
-        fail("Duplicate URI" + value);
+        Assert.fail("Duplicate URI" + value);
       }
     }
     uriStrings.removeAll(initialURIs);
 
     // Test that all the strings are added.
     //
-    assertEquals(expectedSize, uriStrings.size());
+    Assert.assertEquals(expectedSize, uriStrings.size());
 
     // Clean up references to the strings so they can be garbage collected.
     //
@@ -1033,11 +1051,11 @@ public class URITest extends TestCase
       String value = i.next().toString();
       if (!uriStrings.add(value))
       {
-        fail("Duplicate URI" + value);
+        Assert.fail("Duplicate URI" + value);
       }
     }
     uriStrings.removeAll(initialURIs);
-    assertEquals(0, uriStrings.size());
+    Assert.assertEquals(0, uriStrings.size());
   }
   
   private static  final InterningSet<URI> URI_POOL;
@@ -1057,7 +1075,7 @@ public class URITest extends TestCase
     }
     catch (Throwable throwable)
     {
-      fail();
+      Assert.fail();
     }
     URI_POOL = uriPool;
   }
@@ -1244,6 +1262,7 @@ public class URITest extends TestCase
           testURI2Create();
           
         }
+        @org.junit.Test
         public void testURI2Create()
         {
           long start = System.currentTimeMillis();
@@ -1269,6 +1288,7 @@ public class URITest extends TestCase
           
         }
 
+        @org.junit.Test
         public void testURI2Lookup()
         {
           long start = System.currentTimeMillis();
@@ -1294,6 +1314,7 @@ public class URITest extends TestCase
           
         }
 
+        @org.junit.Test
         public void testURICreate()
         {
           long start = System.currentTimeMillis();
@@ -1322,6 +1343,7 @@ public class URITest extends TestCase
           
         }
 
+        @org.junit.Test
         public void testURILookup()
         {
           long start = System.currentTimeMillis();

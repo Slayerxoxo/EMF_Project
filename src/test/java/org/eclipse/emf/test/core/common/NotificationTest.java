@@ -15,9 +15,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.Test;
+/*import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.TestSuite;*/
+
+import org.junit.Assert;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -31,13 +33,15 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+//import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @since 2.2.1
  */
-public class NotificationTest extends TestCase
+public class NotificationTest //extends TestCase
 {
-  public NotificationTest(String name)
+  /*public NotificationTest(String name)
   {
     super(name);
   }
@@ -48,8 +52,9 @@ public class NotificationTest extends TestCase
     ts.addTest(new NotificationTest("testMergeRemoveNotifications"));
     ts.addTest(new NotificationTest("testNotify"));
     return ts;
-  }
+  }*/
   
+  @Test
   public void testMergeRemoveNotifications() throws Exception
   {
     Resource resource = new ResourceImpl();
@@ -186,24 +191,25 @@ public class NotificationTest extends TestCase
 
   private void removeNotificationMergeCheck(List<?> removedItems, List<?> initialContents, NotificationImpl mergedNotification)
   {
-    assertEquals(Notification.REMOVE_MANY, mergedNotification.getEventType());
+    Assert.assertEquals(Notification.REMOVE_MANY, mergedNotification.getEventType());
     
     List<?> oldValue = (List<?>)mergedNotification.getOldValue();
     int[] newValue = (int[])mergedNotification.getNewValue();
     
-    assertEquals(removedItems.size(), oldValue.size());
-    assertEquals(removedItems.size(), newValue.length);
+    Assert.assertEquals(removedItems.size(), oldValue.size());
+    Assert.assertEquals(removedItems.size(), newValue.length);
     
     for (int i=0; i < removedItems.size(); i++)
     {
-      assertTrue(removedItems.contains(oldValue.get(i)) );
-      assertEquals(oldValue.get(i), initialContents.get(newValue[i]));
+      Assert.assertTrue(removedItems.contains(oldValue.get(i)) );
+      Assert.assertEquals(oldValue.get(i), initialContents.get(newValue[i]));
     }
   }
 
   /**
    * @since 2.5
    */
+  @org.junit.Test
   public void testNotify()
   {
     EClass c = EcoreFactory.eINSTANCE.createEClass();
@@ -299,21 +305,22 @@ public class NotificationTest extends TestCase
       this.position = position;
     }
 
+    @org.junit.Test
     public void test(Notification notification)
     {
-      assertEquals(notifier, notification.getNotifier());
-      assertEquals(eventType, notification.getEventType());
-      assertEquals(featureID, notification.getFeatureID(expectedClass));
-      assertEquals(feature, notification.getFeature());
-      assertEqualValues(oldValue, notification.getOldValue());
-      assertEqualValues(newValue, notification.getNewValue());
-      assertEquals(wasSet, notification.wasSet());
-      assertEquals(touch, notification.isTouch());
-      assertEquals(reset, notification.isReset());
-      assertEquals(position, notification.getPosition());
+      Assert.assertEquals(notifier, notification.getNotifier());
+      Assert.assertEquals(eventType, notification.getEventType());
+      Assert.assertEquals(featureID, notification.getFeatureID(expectedClass));
+      Assert.assertEquals(feature, notification.getFeature());
+      //assertEqualValues(oldValue, notification.getOldValue());
+      //assertEqualValues(newValue, notification.getNewValue());
+      Assert.assertEquals(wasSet, notification.wasSet());
+      Assert.assertEquals(touch, notification.isTouch());
+      Assert.assertEquals(reset, notification.isReset());
+      Assert.assertEquals(position, notification.getPosition());
     }
 
-    void assertEqualValues(Object expected, Object actual)
+    /*void assertEqualValues(Object expected, Object actual)
     {
       if (expected instanceof int[] && actual instanceof int[])
       {
@@ -321,14 +328,14 @@ public class NotificationTest extends TestCase
         int[] actualInts = (int[])actual;
         if (!Arrays.equals(expectedInts, actualInts))
         {
-          failNotEquals(null, Arrays.toString(expectedInts), Arrays.toString(actualInts));
+          Assert.failNotEquals(null, Arrays.toString(expectedInts), Arrays.toString(actualInts));
         }
       }
       else
       {
-        assertEquals(expected, actual);
+        Assert.assertEquals(expected, actual);
       }
-    }
+    }*/
   }
 
   class NotificationTester extends AdapterImpl
@@ -344,13 +351,13 @@ public class NotificationTest extends TestCase
     @Override
     public void notifyChanged(Notification msg)
     {
-      assertTrue("Unexpected notification received", notificationCount < expected.length);
+      Assert.assertTrue("Unexpected notification received", notificationCount < expected.length);
       expected[notificationCount++].test(msg);
     }
 
     public void finish()
     {
-      assertEquals("Expected notification not received", notificationCount, expected.length);
+      Assert.assertEquals("Expected notification not received", notificationCount, expected.length);
     }
   }
 }

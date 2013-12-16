@@ -21,20 +21,22 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.emf.common.util.InterningSet;
 import org.eclipse.emf.common.util.Pool;
-
+import org.junit.Assert;
 import org.junit.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+//import junit.framework.Test;
+//import junit.framework.TestCase;
+//import junit.framework.TestSuite;
 
 
-public class StringPoolTest extends TestCase
+public class StringPoolTest //extends TestCase
 {
-  public StringPoolTest(String name)
+  /*public StringPoolTest(String name)
   {
     super(name);
   }
 
-  public static TestSuite suite()
+  public static Test suite()
   {
     TestSuite suite = new TestSuite("StringPoolTest");
     suite.addTest(new StringPoolTest("testWeakness"));
@@ -42,7 +44,7 @@ public class StringPoolTest extends TestCase
     suite.addTest(new StringPoolTest("testThreadSafetyWithCollisions"));
     suite.addTest(new StringPoolTest("testThreadSafetyWithCollisionsAndGarbageCollection"));
     return suite;
-  }
+  }*/
 
   @Test
   public void testWeakness()
@@ -52,12 +54,12 @@ public class StringPoolTest extends TestCase
     {
       String foo = new String("foo");
       set.add(foo);
-      assertTrue(set.contains("foo"));
-      assertEquals(size + 1, set.size());
+      Assert.assertTrue(set.contains("foo"));
+      Assert.assertEquals(size + 1, set.size());
       foo = null;
     }
     System.gc();
-    assertFalse(set.contains("foo"));
+    Assert.assertFalse(set.contains("foo"));
     try
     {
       // If the garbage collector a chance to enqueue the stale entries.
@@ -67,7 +69,7 @@ public class StringPoolTest extends TestCase
     {
       // Expected.
     }
-    assertEquals(size, set.size());
+    Assert.assertEquals(size, set.size());
   }
 
   @Test
@@ -88,7 +90,7 @@ public class StringPoolTest extends TestCase
     testThreadSafety(1000000, 4, true);
   }
 
-  @Test
+  
   public void testThreadSafety(final int count, int stringSize, boolean isGarbageCollectingWhileInterning)
   {
     // Create random strings.
@@ -159,7 +161,7 @@ public class StringPoolTest extends TestCase
       catch (InterruptedException exception)
       {
         exception.printStackTrace();
-        fail("Thread interupted");
+        Assert.fail("Thread interupted");
       }
     }
 
@@ -173,11 +175,11 @@ public class StringPoolTest extends TestCase
       ++countedSize;
       if (!duplicateCheck.add(value))
       {
-        fail("bogus entry \"" + value + "\"");
+        Assert.fail("bogus entry \"" + value + "\"");
       }
       if (!allStrings.contains(value) && (value == null ? ++nulls != 1 : value.length() != 0 || ++empty != 1))
       {
-        fail("bogus entry \"" + value + "\"");
+        Assert.fail("bogus entry \"" + value + "\"");
       }
     }
     strings.getReadLock().unlock();
@@ -186,11 +188,11 @@ public class StringPoolTest extends TestCase
     //
     if (isGarbageCollectingWhileInterning)
     {
-      assertTrue(expectedSize >= countedSize);
+      Assert.assertTrue(expectedSize >= countedSize);
     }
     else
     {
-      assertEquals(expectedSize, strings.size());
+      Assert.assertEquals(expectedSize, strings.size());
     }
 
     // Clean up references to the strings so they can be garbage collected.
@@ -219,7 +221,7 @@ public class StringPoolTest extends TestCase
 
     // Test that all the strings have been cleaned up from the pool.
     //
-    assertEquals(size, strings.size());
+    Assert.assertEquals(size, strings.size());
   }
 
   public static void main(String[] args) throws Exception
@@ -585,7 +587,7 @@ public class StringPoolTest extends TestCase
     }
     catch (ClassNotFoundException e)
     {
-      fail();
+      Assert.fail();
     }
     STRING_POOL_CLASS = stringPoolClass;
   }
@@ -600,7 +602,7 @@ public class StringPoolTest extends TestCase
     }
     catch (Throwable throwable)
     {
-      fail();
+      Assert.fail();
       return null;
     }
   }

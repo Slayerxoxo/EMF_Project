@@ -24,15 +24,17 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.InterningSet;
 import org.eclipse.emf.common.util.WeakInterningHashSet;
+import org.junit.Assert;
+import org.junit.Test;
 
-import junit.framework.Test;
+/*import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.TestSuite;*/
 
 
-public class WeakInterningHashSetTest extends TestCase
+public class WeakInterningHashSetTest //extends TestCase
 {
-  public WeakInterningHashSetTest(String name)
+  /*public WeakInterningHashSetTest(String name)
   {
     super(name);
   }
@@ -43,55 +45,57 @@ public class WeakInterningHashSetTest extends TestCase
     suite.addTest(new WeakInterningHashSetTest("testBasic"));
     suite.addTest(new WeakInterningHashSetTest("testWeakness"));
     return suite;
-  }
+  }*/
 
+  @Test
   public void testBasic()
   {
     WeakInterningHashSet<String> set = new WeakInterningHashSet<String>();
     set.add("foo");
-    assertTrue(set.contains("foo"));
-    assertEquals(1, set.size());
-    assertEquals("[foo]", set.toString());
+    Assert.assertTrue(set.contains("foo"));
+    Assert.assertEquals(1, set.size());
+    Assert.assertEquals("[foo]", set.toString());
     {
       Iterator<String> iterator = set.iterator();
-      assertEquals("foo", iterator.next());
-      assertFalse(iterator.hasNext());
+      Assert.assertEquals("foo", iterator.next());
+      Assert.assertFalse(iterator.hasNext());
     }
 
     set.add(null);
-    assertTrue(set.contains(null));
-    assertEquals(2, set.size());
+    Assert.assertTrue(set.contains(null));
+    Assert.assertEquals(2, set.size());
 
     set.remove(null);
-    assertFalse(set.contains(null));
-    assertEquals(1, set.size());
+    Assert.assertFalse(set.contains(null));
+    Assert.assertEquals(1, set.size());
     
     set.clear();
-    assertEquals(0, set.size());
-    assertTrue(set.isEmpty());
-    assertFalse(set.iterator().hasNext());
+    Assert.assertEquals(0, set.size());
+    Assert.assertTrue(set.isEmpty());
+    Assert.assertFalse(set.iterator().hasNext());
     
     set.add("bar");
     {
       Iterator<String> iterator = set.iterator();
-      assertEquals("bar", iterator.next());
+      Assert.assertEquals("bar", iterator.next());
       iterator.remove();
     }
-    assertEquals(0, set.size());
+    Assert.assertEquals(0, set.size());
   }
 
+  @org.junit.Test
   public void testWeakness()
   {
     WeakInterningHashSet<String> set = new WeakInterningHashSet<String>();
     {
       String foo = new String("foo");
       set.add(foo);
-      assertTrue(set.contains("foo"));
-      assertEquals(1, set.size());
+      Assert.assertTrue(set.contains("foo"));
+      Assert.assertEquals(1, set.size());
       foo = null;
     }
     System.gc();
-    assertFalse(set.contains("foo"));
+    Assert.assertFalse(set.contains("foo"));
     try
     {
       // If the garbage collector a chance to enqueue the stale entries.
@@ -101,7 +105,7 @@ public class WeakInterningHashSetTest extends TestCase
     {
       // Expected.
     }
-    assertEquals(0, set.size());
+    Assert.assertEquals(0, set.size());
   }
 
   
