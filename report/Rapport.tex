@@ -79,7 +79,7 @@
 
 	\vspace{0.5cm}
 
-	La création d'un logiciel, quel qu'il soit, n'est jamais sûr. Le code source peut contenir des fautes, des bugs ou des défauts, sans même que le programmeur ne les remarque. Fort heureusement, il existe aujourd'hui des méthodes efficaces pour contrer ces failles, et renforcer la fiabilité du code source, comme par exemple les tests unitaires.
+	La création d'un logiciel, quel qu'il soit, n'est jamais sûre. Le code source peut contenir des fautes, des bugs ou des défauts, sans même que le programmeur ne les remarque. Fort heureusement, il existe aujourd'hui des méthodes efficaces pour contrer ces failles, et renforcer la fiabilité du code source, comme par exemple les tests unitaires.
 
 	\vspace{0.5cm}
 
@@ -87,7 +87,7 @@
 
 	\vspace{0.5cm}
 
-	Ce rapport présente donc une application directe de ce que nous a appris le module Vérification et tests, au travers de deux grandes étapes de travail. Pour la première, nous avons tout d'abord restructuré une partie du code source de l'EMF en un projet Maven. Puis nous avons évalué les tests déjà présent dans ce code. Pour la seconde étape nous avons amélioré autant que possible la qualité de la classe URI, afin d'augmenter sa fiabilité.
+	Ce rapport présente donc une application directe de ce que nous a appris le module Vérification et tests, au travers de deux grandes étapes de travail. Pour la première, nous avons tout d'abord dû restructurer une partie du code source de l'EMF en un projet Maven. Puis nous avons dû évaluer les tests déjà présent dans ce code. Pour la seconde étape nous avons dû améliorer autant que possible la qualité de la classe URI, afin d'augmenter sa fiabilité.
 
 	\newpage
 
@@ -114,7 +114,7 @@
 
 		\vspace{0.5cm}
 
-		\subsubsection{Convertion du code original}
+		\subsubsection{Conversion du code original}
 
 		\vspace{0.5cm}
 
@@ -122,15 +122,15 @@
 
 		\vspace{0.5cm}
 
-		Ainsi, pour répondre à la demande du cahier des charges de ne pas utiliser Eclipse, nous avons choisi un nouvel IDE compatible avec Maven pour travailler. Ce choix s'est porté sur l'IDE NetBeans, qui permet de supporter plusieurs langages, et dont la dernière version inclut Maven. Cependant, le code source original devait être au préalable adapté, avant de pouvoir le travailler.
+		Ainsi, pour répondre à la demande du cahier des charges de ne pas utiliser Eclipse, nous avons choisi un nouvel IDE compatible avec Maven pour travailler. Ce choix s'est porté sur l'IDE NetBeans, qui permet de supporter plusieurs langages, et possédant un plugin de gestion de Maven. Cependant, le code source original devait être au préalable adapté, avant de pouvoir le travailler.
 
 		\vspace{0.5cm}
 
-		Afin d'optimiser notre travail, nous n'avons pas converti la totalité de l'archive téléchargée, mais juste la partie du code intéressante pour le projet. Malgré la facilité de conversion de l'architecture, cette tâche fût longue et relativement fastidieuse. Certaines erreurs de package et de plugin sont apparues, ce qui nous a pris du temps à résoudre. 
+		Afin d'optimiser notre travail, nous n'avons pas converti la totalité de l'archive téléchargée, mais juste la partie du code intéressante pour le projet. Malgré la facilité de conversion de l'architecture, cette tâche fût relativement fastidieuse. Certaines erreurs de package et de plugin sont apparues, ce qui nous a pris du temps à résoudre. De plus, tous les tests du projet étant mis dans un unique dossier, il nous a fallu identifier ceux qui étaient liés au code sur lequel nous avions à travailler.
 
 		\vspace{0.5cm}
 
-		Voici l'arborescance obtenue après la conversion du code source original en projet Netbean/Maven : 
+		Voici l'arborescence obtenue après la conversion du code source original en projet Netbeans/Maven : 
 
 		\begin{center}
 			\includegraphics[width=1.0\textwidth]{Arborescence.jpg}~\\
@@ -154,11 +154,59 @@
 
 
 		%%%%% Partie 1.2 %%%%%
-		\subsection{Evaluation des tests}
+		\subsection{Passage des tests à JUnit 4.11}
 
 		\vspace{0.5cm}
 
-		Après avoir lancé les tests, déjà présents dans l'archive initiale, plusieurs problèmes sont apparus. Tout d'abord, il y a eu très peu de couverture du code par les tests (d'après l'IDE Netbeans, moins de 40 \% du code est couvert). Ce problème est principalement dû au fait qu'il y ait deux classes de tests, qui possèdent chacune des dépendances que l'on ne peut pas satisfaire. De plus, le logiciel qui permet de tester efficacement les mutations, ne fonctionne pas correctement, et n'exécute pas les bons tests.
+		Il a d'abord été nécessaire de mettre les tests existants à jour, afin qu'ils puissent être exécutés par la version 4.11 de JUnit. En effet, ceux ci étaient basés sur une version obsolète de JUnit. Cette partie n'a pas demandé énormément de travail, étant donné qu'elle a principalement consisté à supprimer les inclusions de l'ancienne version de JUnit afin de les remplacer par les récentes. Il a également été nécessaire de rajouter l'annotation \texttt{@Test} avant chaque méthode de test unitaire, afin que l'appel à JUnit puisse les identifier clairement.
+
+		%%%%%% Partie 1.3 %%%%%%%%
+		\subsection{Evaluation de la qualité des tests}
+
+		\vspace{0.5cm}
+
+		Afin d'évaluer la qualité des tests présents, nous avons procédé en trois étapes:
+
+		\subsubsection{Exécution des tests}
+
+		\vspace{0.5cm}
+
+		Nous avons tout d'abord exécuté les tests, afin de voir s'ils échouaient ou réussissaient, ainsi que leur nombre.
+
+		Comme le montre l'image suivante, les 23 tests exécutés sont tous positifs, ce qui est une bonne chose.
+
+		\begin{center}
+			\includegraphics[width=1.0\textwidth]{tests_execution.png}~\\
+		\end{center}
+
+		\subsubsection{Couverture du code}
+
+		\vspace{0.5cm}
+
+		Nous avons ensuite utilisé Cobertura, un outils de couverture de code permettant de mettre en évidence la proportion du code effectivement exécutée lors de l'appel des tests unitaires.
+
+		Comme le montre l'image suivante, uniquement 37\% du code est testé. Même si ce pourcentage est faible, il est intéressant de remarquer que la majorité des classes sont soit complètement couvertes, soit pas du tout (très peu de classes ont une couverture partielle).
+
+		\begin{center}
+			\includegraphics[width=1.0\textwidth]{couverture.png}~\\
+		\end{center}
+
+		\subsubsection{Analyse de mutation}
+
+		\vspace{0.5cm}
+
+		Nous avons enfin utilisé Pit, un outils d'analyse de mutation. Il permet de générer des mutants afin de tester si de légères modifications du code permettent de tromper la suite de tests, ou s'ils sont détectés.
+
+		Malheureusement, très peu de ces mutants sont détectés, et la majorité des rapports d'exécution de Pit sont similaires à celui présent sur l'image suivante.
+
+		\begin{center}
+			\includegraphics[width=1.0\textwidth]{CapturePit.png}~\\
+		\end{center}
+
+		%%%%%%%%% Partie 1.4 %%%%%%%%%%%
+		\subsection{Conclusion sur la partie 1}
+
+		Suite à ces observations, on peut conclure que la suite de tests actuellement présente sur le projet n'est ni exhaustive (elle est même très loin de l'être au vu des résultats de couverture du code), ni vraiment efficace, comme le montrent les résultats de l'analyse de mutation. Il est donc nécessaire d'améliorer celle-ci, d'une part en étendant la couverture effectuée, et d'autre part en implémentant plus de cas de test afin de mieux identifier les erreurs induites par les mutants.
 
 	\newpage
 
@@ -168,6 +216,8 @@
 	\end{center}
 
 	\vspace{0.5cm}
+
+	Il nous était ensuite demander de travailler sur une unique classe, la classe URI du package \texttt{org/eclipse/emf/common/util}, afin d'améliorer sa qualité, ainsi que celle de ses tests. Malheureusement, nous n'avons pas pu effectuer cette partie, faute de temps.
 
 		%%%%% Partie 2.1 %%%%%
 		\subsection{La classe URI}
@@ -189,8 +239,8 @@
 	\begin{center}
 		\section{Conclusion}
 	\end{center}	
-		Bien que nous n'ayons pas totalement terminé ce travail, le projet de Vérification et Tests reste un projet d'apprentissage. Nous avons appris de nouvelles notions, comme l'utilisation de Maven et de son système d'architecture. Nous avons également amélioré nos compétences en informatique en travaillant sur le code de d'autres programmeur, et en le retravaillant.
+		Bien que nous n'ayons pas totalement terminé ce travail, le projet de Vérification et Tests reste un projet d'apprentissage. Nous avons appris de nouvelles notions, comme l'utilisation de Maven et de son système d'architecture. Nous avons également amélioré nos compétences en informatique en travaillant sur le code d'autres programmeurs, et en le retravaillant.
 
-		Ce projet nous a permis d'utiliser nos nouvelles connaissances étudiées en \textit{Vérification et Tests}, mais pas seulement. Nous nous sommes servis pour ce projet de d'autres notions vues dans d'autres modules d'enseignement, comme par exemple \textit{Concepts et Outils de Développement}, ou \textit{Génie Logiciel}.
+		Ce projet nous a permis d'utiliser nos nouvelles connaissances étudiées en \textit{Vérification et Tests}, mais pas seulement. Nous nous sommes servis pour ce projet d'autres notions vues dans d'autres modules d'enseignement, comme par exemple \textit{Concepts et Outils de Développement}, ou \textit{Génie Logiciel}.
  
 \end{document}
