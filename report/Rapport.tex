@@ -83,7 +83,7 @@
 
 	\vspace{0.5cm}
 
-	Le module Vérification et tests que nous avons étudié en Master \textsc{Alma} à l’Université de Nantes, nous a apporté un ensemble de techniques utilisables sur la majorité des langages informatique. Pour parfaire cet apprentissage, nous avons travaillé sur la restructuration et l'amélioration de l'EMF (Eclipse Modeling Framework), un logiciel libre développé pour et par Eclipse.
+	Le module \textit{Vérification et Tests} que nous avons étudié en Master \textsc{Alma} à l’Université de Nantes, nous a apporté un ensemble de techniques utilisables sur la majorité des langages informatique. Pour parfaire cet apprentissage, nous avons travaillé sur la restructuration et l'amélioration de l'EMF (Eclipse Modeling Framework), un logiciel libre développé pour et par Eclipse.
 
 	\vspace{0.5cm}
 
@@ -118,11 +118,11 @@
 
 		\vspace{0.5cm}
 
-		Le code source original du projet EMF est disponible sur gitHub. Il est donc téléchargeable en archive, et modifiable par n'importe qui. Cependant, l'archive que nous avons récupérée fournit un code source conditionné pour l'environnement de développement Eclipse, et cet IDE nous à été fortement déconseillé.
+		Le code source original du projet EMF est disponible sur gitHub. Il est donc téléchargeable en archive, et modifiable par n'importe qui. Cependant, l'archive que nous avons récupérée fournit un code source conditionné pour l'environnement de développement Eclipse, et cet IDE nous a été fortement déconseillé.
 
 		\vspace{0.5cm}
 
-		Ainsi, pour répondre à la demande du cahier des charges de ne pas utiliser Eclipse, nous avons choisi un nouvel IDE compatible avec Maven pour travailler. Ce choix c'est porté sur l'IDE NetBeans, qui permet de supporter plusieurs langages, et dont la dernière version inclut Maven. Cependant, le code source original devait être au préalable adapté, avant de pouvoir
+		Ainsi, pour répondre à la demande du cahier des charges de ne pas utiliser Eclipse, nous avons choisi un nouvel IDE compatible avec Maven pour travailler. Ce choix s'est porté sur l'IDE NetBeans, qui permet de supporter plusieurs langages, et dont la dernière version inclut Maven. Cependant, le code source original devait être au préalable adapté, avant de pouvoir le travailler.
 
 		\vspace{0.5cm}
 
@@ -133,7 +133,7 @@
 		Voici l'arborescance obtenue après la conversion du code source original en projet Netbean/Maven : 
 
 		\begin{center}
-			\includegraphics[width=0.30\textwidth]{Arborescence.jpg}~\\
+			\includegraphics[width=1.0\textwidth]{Arborescence.jpg}~\\
 		\end{center}
 
 		\vspace{0.5cm}
@@ -158,7 +158,7 @@
 
 		\vspace{0.5cm}
 
-		Bla bla bla bla bla
+		Après avoir lancé les tests, déjà présents dans l'archive initiale, plusieurs problèmes sont apparus. Tout d'abord, il y a eu très peu de couverture du code par les tests (d'après l'IDE Netbeans, moins de 40 \% du code est couvert). Ce problème est principalement dû au fait qu'il y ait deux classes de tests, qui possèdent chacune des dépendances que l'on ne peut pas satisfaire. De plus, le logiciel qui permet de tester efficacement les mutations, ne fonctionne pas correctement, et n'exécute pas les bons tests.
 
 	\newpage
 
@@ -176,23 +176,21 @@
 
 			\subsubsection{Défauts de conception}
 
-			Bla bla bla bla bla
+			Après avoir terminé la première partie du projet, c'est à dire réorganiser le projet pour Maven et réparer les erreurs de compatibilités, nous avons chercher les défauts de conceptions de la classe URI.  
 
 			\vspace{0.5cm}
 
 			\subsubsection{Améliorations possibles}
 
-			Bla bla bla bla bla
+			Pour améliorer la classe URI, nous avons eu plusieurs idées. Malheureusement, nous n'avons pas eu le temps de tester nos hypothèses et de mettre en place nos améliorations.
 
-			\vspace{0.5cm}
+			\newpage
 
+	\begin{center}
+		\section{Conclusion}
+	\end{center}	
+		Bien que nous n'ayons pas totalement terminé ce travail, le projet de Vérification et Tests reste un projet d'apprentissage. Nous avons appris de nouvelles notions, comme l'utilisation de Maven et de son système d'architecture. Nous avons également amélioré nos compétences en informatique en travaillant sur le code de d'autres programmeur, et en le retravaillant.
 
-		%%%%% Partie 2.2 %%%%%
-		\subsection{Modifications}
-
-		\vspace{0.5cm}
-
-		Bla bla bla bla bla
-
-
+		Ce projet nous a permis d'utiliser nos nouvelles connaissances étudiées en \textit{Vérification et Tests}, mais pas seulement. Nous nous sommes servis pour ce projet de d'autres notions vues dans d'autres modules d'enseignement, comme par exemple \textit{Concepts et Outils de Développement}, ou \textit{Génie Logiciel}.
+ 
 \end{document}
